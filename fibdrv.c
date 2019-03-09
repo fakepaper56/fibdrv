@@ -31,13 +31,13 @@ static long long fib_sequence(long long k)
 
     long long t = 1 << (63 - __builtin_clz(k)) >>
                   1;  // the first index of leading 1 minus one
-    long long a = 1;  // f(k)
-    long long b = 1;  // f(k+1)
+    long long a = 1;  // f(i)
+    long long b = 1;  // f(i+1)
 
     for (; t; t >>= 1) {
-        long long _a = a * (2 * b - a);  // f(2k) = f(k) * (2 * f(k + 1) - f(k))
+        long long _a = a * (2 * b - a);  // f(2i) = f(i) * (2f(i+1) - f(i))
         long long _b =
-            a * a + b * b;  // f(2k + 1) = f(k) * f(k) + f(k+1) * f(k+1)
+            a * a + b * b;  // f(2i+1) = f(i) * f(i) + f(i+1) * f(i+1)
         a = (k & t) ? _b : _a;
         b = (k & t) ? _b + _a : _b;
     }
